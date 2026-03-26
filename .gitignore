@@ -1,0 +1,7 @@
+# out directory
+out/
+
+# virtual environment
+venv/
+
+__pycache__/
