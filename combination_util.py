@@ -8,7 +8,7 @@ def generate_combination(
     ) -> list:
     '''
     :param parameter_dict: 입력 파라미터
-    :param chunk_size: 나눌 단위 (None이면 전체 반환)
+    :param chunk_size: n으로나눌 단위 (None이면 전체 반환)
     :param use_modelvars: True → {'ModelVars': {...}} 형태
     '''
 
