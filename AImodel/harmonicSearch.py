@@ -27,29 +27,28 @@ def constraints() -> list:
     return[
         ("lripple", 2.0, '<='),
         ("vripple", 20.0, "<="),
-        ("leakage", 20.0, "<="),
     ]
 
-def evaluate_lt(model_ripple,
-                model_leakage_current,
-                x_scaler,
-                y_ripple_scaler,
-                y_leakage_scaler,
-                x) -> dict:
+def evaluate_lt(model, scaler, x) -> dict:
   
 	x_array = np.array([[x["L1"], x["L2"], x["C"], x["fsw"]]])
-	x_scaled = x_scaler.transform(x_array)
+	x_scaled = scaler["std_x"].transform(x_array)
 	
-	y_ripple_scaled = model_ripple.predict(x_scaled, verbose=0)
-	y_leakage_scaled = model_leakage_current.predict(x_scaled, verbose=0)
+	y_ripple_scaled = model["ripple"].predict(x_scaled)
+	y_loss_scaled  = model["loss"].predict(x_scaled, verbose=0)
+	y_temp_scaled  = model["temp"].predict(x_scaled, verbose=0)
 	
-	y_ripple_pred = y_ripple_scaler.inverse_transform(y_ripple_scaled)
-	y_leakage_pred = y_leakage_scaler.inverse_transform(y_leakage_scaled)
+	y_ripple_pred = scaler["std_ripple"].inverse_transform(y_ripple_scaled)
+	y_loss_pred = scaler["std_loss"].inverse_transform(y_loss_scaled)
+	y_temp_pred = scaler["std_temp"].inverse_transform(y_temp_scaled)
+
     
 	return {
 		"lripple" : y_ripple_pred[0, 0],
 		"vripple" : y_ripple_pred[0, 1],
-      	"leakage" : y_leakage_pred[0, 0],
+		"cond_loss" : y_loss_pred[0, 0],
+		"sw_loss" : y_loss_pred[0, 1],
+		"temp" : y_temp_pred[0, 0],
 	}
 
 def clamp(x, lo, hi):
@@ -70,25 +69,25 @@ def random_solution(bnd):
         x[k] = random.uniform(lo, hi) 
     return x
 
-def objective(metrics, y_ripple_mmscaler, y_leakage_mmscaler, p=6):
+def objective(metrics, scaler, p=6):
     '''
     p-norm 기반 목적 함수 (minimize)
     '''
 
     ripple = np.array([[metrics["lripple"], metrics["vripple"]]])
-    ripple_norm = y_ripple_mmscaler.transform(ripple)
+    ripple_norm = scaler["mm_ripple"].transform(ripple) # minmax로 바꾸기(음수 피함)
+
+
+    loss = metrics["cond_loss"] + metrics["sw_loss"]
 
     i = ripple_norm[0, 0]
     v = ripple_norm[0, 1]
 
-    leakage = np.array([[metrics["leakage"]]])
-    l = y_leakage_mmscaler.transform(leakage)[0, 0]
-
-    return (v**p + i**p + l**p)**(1/p)
+    return loss + (v**p + i**p)**(1/p)
 
 def penalty(metrics, rho=1e6):
     '''
-    제약조건 위반 시 벌점 부여
+    제약조건 위반 시 벌점 부여 - constraints에 적힌 것 안에서만
     '''
     total = 0.0
     
@@ -110,13 +109,8 @@ def penalty(metrics, rho=1e6):
     return rho * total
 
 def harmony_search(
-  		model_ripple,
-  		model_leakage_current,
-  		x_scaler,
-  		y_ripple_scaler,
-  		y_leakage_scaler,
-  		y_ripple_mmscaler,
-  		y_leakage_mmscaler,
+  		model,
+  		scaler,
         hms = 30,
         hmcr = 0.95,
         par = 0.7,
@@ -129,7 +123,7 @@ def harmony_search(
     # 각 f, L, C의 범위 차에 0.02를 곱해줌 - 미세조정을 위해서
     for k in bnd:
         lo, hi = bnd[k]
-        bw[k] = 0.2 * (hi - lo) * (1 - it / max_iters) # 초반에 크게 탐색 후반에 작게
+        bw[k] = 0.2 * (hi - lo)
 
     HM = []
     HM_fit = []
@@ -139,13 +133,8 @@ def harmony_search(
     # 처음 F, L, C조합 30개에 대한 fit값 추출
     for _ in range(hms):
         x = random_solution(bnd)
-        m = evaluate_lt(model_ripple, 
-                        model_leakage_current,
-                        x_scaler,
-                        y_ripple_scaler,
-                        y_leakage_scaler,
-                        x)
-        f = objective(m, y_ripple_mmscaler, y_leakage_mmscaler) + penalty(m, rho)
+        m = evaluate_lt(model, scaler, x)
+        f = objective(m, scaler) + penalty(m, rho)
         HM.append(x)
         HM_metrics.append(m)
         HM_fit.append(f)
@@ -176,14 +165,8 @@ def harmony_search(
                 x_new [k] = clamp(val, lo, hi)
             else: 
                 x_new[k] = random.uniform(lo, hi) # 랜덤 생성
-        m_new = evaluate_lt(model_ripple,
-                            model_leakage_current,
-                            x_scaler,
-                            y_ripple_scaler,
-                            y_leakage_scaler,
-                            x_new
-                           )
-        f_new = objective(m_new, y_ripple_mmscaler, y_leakage_mmscaler) + penalty(m_new, rho)
+        m_new = evaluate_lt(model, scaler, x_new)
+        f_new = objective(m_new,scaler) + penalty(m_new, rho)
 
         # 새롭게 만든 F,L,C 조합의 적응도가 HM의 가장 적응도가 높은 것보다 낮으면
         # 적응도가 낮아야 좋은것
