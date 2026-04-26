@@ -1,23 +1,25 @@
 import pandas as pd
+import numpy as np
 
 # CSV 로드
-df = pd.read_csv("experiment_results.csv")
+df = pd.read_csv("/home/pcsl/Documents/plecs/sepic/plecs_python_auto/out/sepic_data/inner_loop/ripple_results.csv")
 
-# best_val_accuracy 기준 내림차순 정렬 후 상위 5개
-top5 = df.sort_values(by="best_val_accuracy", ascending=False).head(10)
 
-# 보고 싶은 컬럼만 선택
-cols = [
-    "batch_size",
-    "epochs",
-    "learning_rate",
-    "num_conv_blocks",
-    "filters",
-    "kernel_size",
-    "use_batchnorm",
-    "dropout_rate",
-    "dense_units",
-    "best_val_accuracy"
-]
+col = df["mosfet_cond_loss"]
 
-print(top5[cols])
+min_idx = col.idxmin()
+max_idx = col.idxmax()
+
+print("min 값:", col[min_idx], "행 index:", min_idx)
+print("max 값:", col[max_idx], "행 index:", max_idx)
+
+print("mean", np.mean(col))
+print("max", np.max(col))
+print("min", np.min(col))
+print("std", np.std(col))
+print("var", np.var(col))
+
+
+top20 = df.nlargest(40, "mosfet_cond_loss")
+
+print(top20)

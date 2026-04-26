@@ -1,14 +1,25 @@
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from keras import layers, Input, Model
+from keras import layers, Input, Model, optimizers
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 tf.random.set_seed(777) # 하이퍼파라미터 튜닝을 위해 실행시 마다 변수가 같은 초기값 가지게 하기
+
+
+def compile_model(model:Model, optimizer = optimizers.Adam):
+
+    model.compile(
+        optimizer = optimizer,
+        loss='mse',
+        metrics=['mae']
+    )
+
+    return model
 
 def build_original_model_ripple():
     model_ripple = tf.keras.models.Sequential([
@@ -24,7 +35,7 @@ def build_original_model_ripple():
 
         layers.Dense(2),  #  Iripple, Vripple,
     ])
-    return model_ripple
+    return compile_model(model_ripple, optimizers.Adam(1e-3))
 
 def build_random_forest():
     return RandomForestRegressor(
@@ -64,7 +75,7 @@ def build_residual_mlp_leakage(input_dim=4, output_dim=1):
     outputs = layers.Dense(output_dim)(x)
     
     model = Model(inputs, outputs, name='residual_mlp_leakage')
-    return model
+    return compile_model(model, optimizers.Adam(1e-3))
 
 
 def build_residual_mlp_ripple(input_dim=4, output_dim=2):
@@ -107,7 +118,7 @@ def build_residual_mlp_ripple(input_dim=4, output_dim=2):
     outputs = layers.Dense(output_dim)(x)
     
     model = Model(inputs, outputs, name='residual_mlp_ripple')
-    return model
+    return compile_model(model, optimizers.Adam(1e-3))
 
 
 def build_residual_mlp_loss(input_dim=4, output_dim=2):
@@ -146,7 +157,7 @@ def build_residual_mlp_loss(input_dim=4, output_dim=2):
     outputs = layers.Dense(output_dim)(x)
     
     model = Model(inputs, outputs, name='residual_mlp_ripple')
-    return model
+    return compile_model(model, optimizers.Adam(1e-3))
 
 
 def build_residual_mlp_temp(input_dim=4, output_dim=1):
@@ -181,7 +192,47 @@ def build_residual_mlp_temp(input_dim=4, output_dim=1):
     outputs = layers.Dense(output_dim)(x)
     
     model = Model(inputs, outputs, name='residual_mlp_leakage')
-    return model
+    return compile_model(model, optimizers.Adam(1e-3))
+
+
+def build_residual(input_dim=4, output_dim=1, model_name="residual_model"):
+    inputs = tf.keras.Input(shape=(input_dim,))
+    
+    # Block 1
+    x = layers.Dense(30)(inputs)
+    x = layers.BatchNormalization()(x)
+    x = layers.LeakyReLU(alpha=0.01)(x)
+    
+    # Residual Block 1
+    residual = x # 현재의 x를 저장
+
+    # 잔차 학습 구문
+    x = layers.Dense(30)(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.LeakyReLU(alpha=0.01)(x)
+    x = layers.Dense(30)(x)
+    x = layers.BatchNormalization()(x)
+
+    # 원본과 잔차를 더함(최종 결과)
+    x = layers.Add()([x, residual])  # skip connection(잔차 학습)
+    x = layers.LeakyReLU(alpha=0.01)(x)
+    
+    # Residual Block 2
+    residual = x
+    x = layers.Dense(30)(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.LeakyReLU(alpha=0.01)(x)
+    x = layers.Dense(30)(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Add()([x, residual])  # skip connection
+    x = layers.LeakyReLU(alpha=0.01)(x)
+
+    # Output
+    outputs = layers.Dense(output_dim)(x)
+    
+    model = Model(inputs, outputs, name=model_name)
+    return compile_model(model, optimizers.Adam(1e-3))
+
 
 def build_conduction_mode_classifier(input_dim=4):
     inputs = tf.keras.Input(shape=(input_dim,))
@@ -204,7 +255,7 @@ def build_conduction_mode_classifier(input_dim=4):
     out_mode = layers.Dense(2, activation='sigmoid', name='mode')(x)
 
     model = Model(inputs, out_mode, name='conduction_mode_classifier')
-    return model
+    return compile_model(model, optimizers.Adam(1e-3))
 
 def split_data(*arrays, train_ratio=0.70, val_ratio=0.15, random_state=42):
     """
@@ -260,14 +311,35 @@ def scale_data(train, val, test, scaler=None):
 
 def train_and_evaluate(model, X_train, y_train, X_val, y_val, X_test, y_test,
                       model_name='model', epochs=100, batch_size=100):
+    
+    early_stop = EarlyStopping(
+        monitor='val_loss',   # 검증 성능 기준
+        patience=10,          # 10 epoch 동안 개선 없으면 stop
+        restore_best_weights=True  # 가장 좋았던 시점으로 되돌림 (중요🔥)
+    )
 
+    reduce_lr = ReduceLROnPlateau(
+        monitor='val_loss',
+        factor=0.5,      # lr 절반으로 감소
+        patience=5,
+        min_lr=1e-6
+    )
+
+    checkpoint = ModelCheckpoint(
+        f'{model_name}.h5',
+        monitor='val_loss',
+        save_best_only=True
+    )
     # =========================
+    callbacks = [early_stop, reduce_lr, checkpoint]
+
     history = model.fit(
         X_train, y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
         batch_size=batch_size,
-        verbose=0
+        verbose=0,
+        callbacks=callbacks
     )
 
     def evaluate_to_dict(model, X, y):

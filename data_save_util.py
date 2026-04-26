@@ -35,9 +35,6 @@ def rawdata_to_csv(result_data):
 
 
 def data_to_csv(results, out_dir = OUT_DIR):
-    """
-    results 리스트를 CSV에 누적 저장하고, 저장 후 반환값은 없음
-    """
     try:
         if not results:
             return
@@ -52,3 +49,4 @@ def data_to_csv(results, out_dir = OUT_DIR):
         logger.error(f"[CSV Insert Exception][Error: {e}]")
         traceback.print_exc()
         raise
+
