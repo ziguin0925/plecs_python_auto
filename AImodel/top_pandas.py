@@ -2,7 +2,9 @@ import pandas as pd
 import numpy as np
 
 # CSV 로드
-df = pd.read_csv("/home/pcsl/Documents/plecs/sepic/plecs_python_auto/out/sepic_data/inner_loop/ripple_results.csv")
+df = pd.read_csv(
+    "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/out/sepic_data/inner_loop/ripple_results.csv"
+)
 
 
 col = df["mosfet_cond_loss"]
@@ -20,6 +22,9 @@ print("std", np.std(col))
 print("var", np.var(col))
 
 
-top20 = df.nlargest(40, "mosfet_cond_loss")
+mask = df["mosfet_cond_loss"] > 400
 
-print(top20)
+filtered = df.loc[mask, ["L1", "L2", "C1", "C2", "mosfet_cond_loss"]]
+
+print(len(filtered))
+print(filtered[40:60])
