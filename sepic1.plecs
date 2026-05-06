@@ -3,7 +3,7 @@ Plecs {
   Version       "5.0"
   CircuitModel  "ContStateSpace"
   StartTime     "0"
-  TimeSpan      "0.1"
+  TimeSpan      "2"
   Timeout       ""
   Solver        "auto"
   MaxStep       "1e-6"
@@ -29,9 +29,9 @@ Plecs {
   AssertionAction "1"
   FixedPointDatatypeOverride "1"
   InitializationCommands "fs = 50e3;\n\nKp_v = 0.1;\nKi_v = 0.095;\nTs_v = 1e-"
-"4\n\nTs=1/fs;\nL1 = 0.000900;\nL2 =  1.29e-05;\nC1 = (9.67e-06)*2;\nC2 = 0.00"
-"0188;\n\nESR_L1 = L1 * 1000;\nESR_L2 = L2 * 1000;\nESR_C1 = 0.25 / (2 * 3.14 "
-"* C1 * 50000);\nESR_C2 = 0.08 / (2 * 3.14 * C2 * 50000);\n\n\n"
+"4\n\nTs=1/fs;\n\nL1 = 162e-06;\nL2 =  77e-06;\nC1 = 54e-06 * 2;\nC2 = 28e-06;"
+"\n\nESR_L1 = L1 * 1000;\nESR_L2 = L2 * 1000;\nESR_C1 = 0.25 / (2 * 3.14 * C1 "
+"* 50000);\nESR_C2 = 0.08 / (2 * 3.14 * C2 * 50000);\n\n\n"
   InitialState  "1"
   SystemState   ""
   JacobianComputation "2"
@@ -81,9 +81,9 @@ Plecs {
     Index         "3"
   }
   Schematic {
-    Location      [0, 69; 960, 1039]
-    ZoomFactor    0.704255
-    SliderPosition [0, 89]
+    Location      [0, 69; 1920, 1039]
+    ZoomFactor    0.805926
+    SliderPosition [19, 240]
     ShowBrowser   off
     BrowserWidth  100
     Component {
@@ -148,8 +148,9 @@ Plecs {
       }
       Parameter {
         Variable      "thermal"
-        Value         "file:VS-E5PX7506L-N3"
+        Value         "file:IDW75E60_diode"
         Show          off
+        CustomVariables "struct('Rgon', 3)"
       }
       Parameter {
         Variable      "Rth"
@@ -187,7 +188,7 @@ Plecs {
       LabelPosition east
       Parameter {
         Variable      "V"
-        Value         "400"
+        Value         "100"
         Show          on
       }
     }
@@ -275,7 +276,7 @@ Plecs {
       }
       Parameter {
         Variable      "v_init"
-        Value         "48"
+        Value         "0"
         Show          off
       }
     }
@@ -294,7 +295,7 @@ Plecs {
       }
       Parameter {
         Variable      "v_init"
-        Value         "400"
+        Value         "0"
         Show          off
       }
     }
@@ -327,8 +328,9 @@ Plecs {
       }
       Parameter {
         Variable      "thermal"
-        Value         "file:GS-065-030-6-LL-TR"
+        Value         "file:IGT65R045D2-plecs"
         Show          off
+        CustomVariables "struct('Rg_off', 1.3, 'Rg_on', 1.3)"
       }
       Parameter {
         Variable      "Rth"
@@ -395,7 +397,7 @@ Plecs {
       LabelPosition west
       Parameter {
         Variable      "Rth"
-        Value         "3"
+        Value         "5"
         Show          on
       }
     }
@@ -1333,11 +1335,11 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [983, 69; 1920, 1061]
+      Location      [0, 69; 1920, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
-"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAOpAAAAVPw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAA6kAAABEAP///wAAA6kAAANnAAAA"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAeAAAAAVPw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANnAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
@@ -1386,14 +1388,14 @@ Plecs {
       Type          HeatSink
       Name          "Heat Sink1"
       Show          on
-      Position      [1500, 800]
+      Position      [1505, 800]
       Direction     right
       Flipped       off
       LabelPosition south
       Frame         [-22, -22; 22, 22]
       Parameter {
         Variable      "Cth"
-        Value         "0"
+        Value         "5"
         Show          off
       }
       Parameter {
@@ -1422,7 +1424,7 @@ Plecs {
       LabelPosition west
       Parameter {
         Variable      "Rth"
-        Value         "1"
+        Value         "5"
         Show          on
       }
     }
@@ -1551,11 +1553,11 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [114, 86; 1501, 1061]
+      Location      [114, 75; 1501, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
 "///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAVrAAAAVPw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAABWsAAABEAP///wAABWsAAANWAAAA"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAABWsAAABEAP///wAABWsAAANhAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
@@ -2073,11 +2075,11 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [1027, 122; 1856, 1061]
+      Location      [1027, 111; 1856, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAC0AAACmfwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
 "///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAALwAAApkAAABgAP///wAAAAMAAAM9AAAAVPw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAAz0AAABEAP///wAAAz0AAAMyAAAA"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAAz0AAABEAP///wAAAz0AAAM9AAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
@@ -2300,16 +2302,16 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [342, 166; 1747, 829]
+      Location      [0, 69; 1920, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
-"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAV9AAAAWvw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAABX0AAABEAP///wAABX0AAAIYAAAA"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAeAAAAAWvw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANhAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "{\"DefaultSecSize\":0,\"FirstSecSize\":100,\"Labels\":[],"
-"\"VisualIdxs\":[]}"
+      HeaderState   "{\"DefaultSecSize\":100,\"FirstSecSize\":100,\"Labels\":["
+"\"RMS\"],\"VisualIdxs\":[9]}"
       PlotPalettes  "AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       Axes          "1"
       TimeRange     "0.0"
@@ -2436,7 +2438,7 @@ Plecs {
       LabelPosition south
       Parameter {
         Variable      "Time"
-        Value         "0.5"
+        Value         "1"
         Show          off
       }
       Parameter {
@@ -2536,11 +2538,11 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [0, 69; 1280, 789]
+      Location      [0, 69; 1280, 800]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
 "///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAAAAAAAAPw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQAAAAAAP////8AAABEAP///wAABQAAAAKxAAAA"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQAAAAAAP////8AAABEAP///wAABQAAAAK8AAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
@@ -3024,7 +3026,7 @@ Plecs {
       LabelPosition north
       Parameter {
         Variable      "UpperLimit"
-        Value         "10"
+        Value         "15"
         Show          on
       }
       Parameter {
@@ -5269,29 +5271,6 @@ Plecs {
       }
     }
     Connection {
-      Type          HeatPipe
-      SrcComponent  "Heat Sink1"
-      SrcTerminal   1
-      Points        [1530, 800]
-      DstComponent  "th1"
-      DstTerminal   1
-    }
-    Connection {
-      Type          HeatPipe
-      SrcComponent  "Rth"
-      SrcTerminal   2
-      Points        [1340, 1080; 1425, 1080]
-      Branch {
-        DstComponent  "Tconst"
-        DstTerminal   1
-      }
-      Branch {
-        Points        [1530, 1080]
-        DstComponent  "th1"
-        DstTerminal   2
-      }
-    }
-    Connection {
       Type          Signal
       SrcComponent  "Device conduction loss2"
       SrcTerminal   1
@@ -5750,6 +5729,29 @@ Plecs {
         DstComponent  "Mux3"
         DstTerminal   2
       }
+    }
+    Connection {
+      Type          HeatPipe
+      SrcComponent  "Rth"
+      SrcTerminal   2
+      Points        [1340, 1080; 1425, 1080]
+      Branch {
+        DstComponent  "Tconst"
+        DstTerminal   1
+      }
+      Branch {
+        Points        [1530, 1080]
+        DstComponent  "th1"
+        DstTerminal   2
+      }
+    }
+    Connection {
+      Type          HeatPipe
+      SrcComponent  "th1"
+      SrcTerminal   1
+      Points        [1530, 910; 1535, 910; 1535, 800]
+      DstComponent  "Heat Sink1"
+      DstTerminal   1
     }
     Annotation {
       Name          "<html><body>\n<p>diode switcing loss's value is zero</p><"
