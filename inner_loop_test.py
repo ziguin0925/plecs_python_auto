@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import xmlrpc.client as xml
 import numpy as np
 import combination_util as cu
@@ -11,19 +12,23 @@ import time
 logger = get_logger()
 
 call_back = open(
-    "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/AImodel/sepic_test/octave.m"
+    "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/octave_file/no_cpp_octave.m"
 ).read()
 
 param_specs = {
-    "L1": {"start": 400e-6, "step": 100e-6, "count": 10},
-    "L2": {"start": 10e-6, "step": 20e-6, "count": 10},
-    "C1": {"start": 1e-6, "step": 1e-6, "count": 10},
-    "C2": {"start": 10e-6, "step": 20e-6, "count": 10},
+    "L1": {"min": 220e-6, "max": 1700e-6, "count": 10},
+    "L2": {"min": 25e-6, "max": 205e-6, "count": 10},
+    "C1": {"min": 1e-6, "max": 25e-6, "count": 10},
+    "fs": {"min": 50e3, "max": 100e3, "count": 10, "round": -2},
 }
 
-
 parameter_dict = {
-    key: [round(spec["start"] + spec["step"] * i, 6) for i in range(spec["count"])]
+    key: (
+        np.round(
+            np.linspace(spec["min"], spec["max"], spec["count"]),
+            spec.get("round", 6),
+        ).tolist()
+    )
     for key, spec in param_specs.items()
 }
 
@@ -34,6 +39,7 @@ def simulate_recursive(opts, plecs, name):
     if not opts:
         return []
 
+    result = None
     try:
         start = time.time()
         logger.info(f"[SIM START] [{opts}]")
@@ -46,9 +52,7 @@ def simulate_recursive(opts, plecs, name):
     except Exception as e:
         logger.info(f"[SIM FAIL] [{opts}]")
         if len(opts) == 1:  # 1개 일 때는 그냥 실행
-            logger.error(
-                f"[PARAM ERROR] [PARAM = {opts}] [REASON = {e}] [RESULT = {result}]"
-            )
+            logger.error(f"[PARAM ERROR] [PARAM = {opts}] [REASON = {e}]")
             return []
 
         mid = len(opts) // 2
@@ -73,29 +77,27 @@ def run_simulation(opts, plecs, name):
     return result
 
 
-MODEL_PATHS = [
-    "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/sepic1.plecs",
-]
-MODEL_NAMES = [os.path.splitext(os.path.basename(path))[0] for path in MODEL_PATHS]
+MODEL_PATH = (
+    "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/sepic_no_under_cpp.plecs"
+)
 
-# opts_lists = cu.generate_combination_ESR(parameter_dict, 15)
+opts_lists = cu.generate_combination_ESR(parameter_dict, 12)
 
 import existing_remainig as a
 
-opts_lists = a.not_exist_parameter_opts()
+# opts_lists = a.not_exist_parameter_opts(parameter_dict)
 logger.info(f"[opts_lists = {len(opts_lists)}]")
 logger.info(f"[opts_lists[0] = {len(opts_lists[1])}]")
 
 
-name = "sepic1"
 plecs = xml.Server("http://localhost:1080/RPC2").plecs
 
 if __name__ == "__main__":
-    plecs.load(r"/home/pcsl/Documents/plecs/sepic/plecs_python_auto/sepic1.plecs")
+    plecs.load(MODEL_PATH)  # change here
 
     for idx, opts in enumerate(opts_lists):
         logger.info(f"[SIM OPTS SEQUENCE = {idx+1}] [len(opts) = {len(opts)}]")
-        save_data = run_simulation(opts=opts, plecs=plecs, name=name)
+        save_data = run_simulation(opts=opts, plecs=plecs, name=Path(MODEL_PATH).stem)
         if save_data:
             logger.info(f"[SAVE] : {opts}")
-            dsu.data_to_csv(save_data, OUTPUT_PATH, "result_file")
+            dsu.data_to_csv(save_data, OUTPUT_PATH, "result_file_sepic_no_under_cpp")

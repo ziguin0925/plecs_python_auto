@@ -61,14 +61,16 @@ def generate_combination_ESR(
         param_dict["ESR_L2"] = round(
             param_dict["L2"] * 1000, 6
         )  # L2 ESR  0.01 ~ 0.19옴
+
         # Rubycon 450V, 450PK1MEFC6.3X11
         param_dict["ESR_C1"] = round(
-            0.25 / (2 * 3.14 * param_dict["C1"] * 50000), 6
+            0.25 / (2 * 3.14 * param_dict["C1"] * param_dict["fs"]), 6
         )  # Cpp ESR
-        # ZLJ Rubycon 100V, 16ZLJ470MTA8X11.5
-        param_dict["ESR_C2"] = round(
-            0.08 / (2 * 3.14 * param_dict["C2"] * 50000), 6
-        )  # 출력 커패시터 ESR
+
+        # # ZLJ Rubycon 100V, 16ZLJ470MTA8X11.5
+        # param_dict["ESR_C2"] = round(
+        #     0.08 / (2 * 3.14 * param_dict["C2"] * 50000), 6
+        # )  # 출력 커패시터 ESR
 
         if use_modelvars:
             combinations.append({"ModelVars": param_dict})
