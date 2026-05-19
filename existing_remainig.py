@@ -1,22 +1,6 @@
 import pandas as pd
 import numpy as np
-
-param_specs = {
-    "L1": {"min": 220e-6, "max": 1700e-6, "count": 10},
-    "L2": {"min": 25e-6, "max": 205e-6, "count": 10},
-    "C1": {"min": 1e-6, "max": 25e-6, "count": 10},
-    "fs": {"min": 50e3, "max": 100e3, "count": 10, "round": -2},
-}
-
-parameter_dict = {
-    key: (
-        np.round(
-            np.linspace(spec["min"], spec["max"], spec["count"]),
-            spec.get("round", 6),
-        ).tolist()
-    )
-    for key, spec in param_specs.items()
-}
+import itertools
 
 
 def not_exist_parameter_opts(parameter_dict):
@@ -25,8 +9,6 @@ def not_exist_parameter_opts(parameter_dict):
     )
 
     existing_set = set(tuple(row) for row in df[["L1", "L2", "C1", "fs"]].values)
-
-    import itertools
 
     all_combinations = []
 
@@ -51,3 +33,68 @@ def not_exist_parameter_opts(parameter_dict):
     chunked = [opts_lists[i : i + 10] for i in range(0, len(opts_lists), 10)]
 
     return chunked
+
+
+def not_exist_parameter_opts_to_csv(parameter_dict):
+
+    df = pd.read_csv(
+        "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/out/sepic_data/inner_loop/result_file_sepic_no_under_cpp.csv"
+    )
+
+    existing_set = set(tuple(row) for row in df[["L1", "L2", "C1", "fs"]].values)
+
+    keys = list(parameter_dict.keys())
+    values = list(parameter_dict.values())
+
+    remaining = []
+
+    for combo in itertools.product(*values):
+
+        comb = dict(zip(keys, combo))
+
+        key = (
+            comb["L1"],
+            comb["L2"],
+            comb["C1"],
+            comb["fs"],
+        )
+
+        if key not in existing_set:
+            remaining.append(comb)
+
+    # DataFrame 변환
+    remain_df = pd.DataFrame(remaining)
+
+    # CSV 저장
+    save_path = (
+        "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/out/"
+        "sepic_data/inner_loop/not_exist_parameters.csv"
+    )
+
+    remain_df.to_csv(save_path, index=False)
+
+    print(f"saved : {save_path}")
+    print(f"remaining count : {len(remain_df)}")
+
+    return remain_df
+
+
+param_specs = {
+    "L1": {"min": 220e-6, "max": 1700e-6, "count": 10},
+    "L2": {"min": 25e-6, "max": 205e-6, "count": 10},
+    "C1": {"min": 1e-6, "max": 25e-6, "count": 10},
+    "fs": {"min": 50e3, "max": 100e3, "count": 10, "round": -2},
+}
+
+parameter_dict = {
+    key: (
+        np.round(
+            np.linspace(spec["min"], spec["max"], spec["count"]),
+            spec.get("round", 6),
+        ).tolist()
+    )
+    for key, spec in param_specs.items()
+}
+
+
+# not_exist_parameter_opts_to_csv(parameter_dict)

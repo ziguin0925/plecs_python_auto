@@ -52,10 +52,10 @@ try
     diode_cond_loss = mean(result.Values(7, slice:before_touch_idx));
 
 
-    L1_ESR_loss = mean(result.Values(8, slice:before_touch_idx));
-    L2_ESR_loss = mean(result.Values(9, slice:before_touch_idx));
-    C1_ESR_loss = mean(result.Values(10, slice:before_touch_idx));
-    C2_ESR_loss = mean(result.Values(11, slice:before_touch_idx));
+    L1_ESR_loss = round(sqrt(mean(result.Values(8, slice:before_touch_idx).^2)) * 1e06) / 1e06;
+    L2_ESR_loss = round(sqrt(mean(result.Values(9, slice:before_touch_idx).^2)) * 1e06) / 1e06;
+    C1_ESR_loss = round(sqrt(mean(result.Values(10, slice:before_touch_idx).^2)) * 1e06) / 1e06;
+    C2_ESR_loss = round(sqrt(mean(result.Values(11, slice:before_touch_idx).^2)) * 1e06) / 1e06;
 
     efficiency = max(result.Values(12, slice:before_touch_idx));
 

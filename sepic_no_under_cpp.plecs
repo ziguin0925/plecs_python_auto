@@ -1,5 +1,5 @@
 Plecs {
-  Name          "sepic_no_cpp_ under"
+  Name          "sepic_no_under_cpp"
   Version       "5.0"
   CircuitModel  "ContStateSpace"
   StartTime     "0"
@@ -28,10 +28,10 @@ Plecs {
   AlgebraicLoopWithStateMachineMsg "2"
   AssertionAction "1"
   FixedPointDatatypeOverride "1"
-  InitializationCommands "fs = 61e3;\n\nKp_v = 0.1;\nKi_v = 0.095;\nTs_v = 1e-"
-"4\n\nTs=1/fs;\nL1 = 878e-06;\nL2 =  45e-06;\nC1 = 12e-06;\nC2 = 70e-06;\n\nES"
-"R_L1 = L1 * 1000;\nESR_L2 = L2 * 1000;\nESR_C1 = 0.25 / (2 * 3.14 * C1 * fs);"
-"\nESR_C2 = 0.08 / (2 * 3.14 * C2 * fs);\n\n\n\n"
+  InitializationCommands "fs = 950e2;\n\nKp_v = 0.1;\nKi_v = 0.095;\nTs_v = 1e"
+"-4\n\n\nTs=1/fs;\nL1 = 319e-06;\nL2 =  25e-06;\nC1 = 17e-06;\nC2 = 70e-06;\n"
+"\nESR_L1 = L1 * 1000;\nESR_L2 = L2 * 1000;\nESR_C1 = 0.25 / (2 * 3.14 * C1 * "
+"fs);\nESR_C2 = 0.08 / (2 * 3.14 * C2 * fs);\n\n\n\n"
   InitialState  "1"
   SystemState   ""
   JacobianComputation "2"
@@ -418,8 +418,8 @@ Plecs {
       Location      [0, 69; 1920, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAC0AAACvvwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAKYA////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAvAA"
-"AB+AAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAANAAAAr4AAABgAP///wAAAAMAAAeAAAAA9Pw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAALHAAAA"
+"AB+AAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAANAAAAr4AAABgAP///wAAAAMAAAeAAAAAdPw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANHAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
@@ -1248,7 +1248,8 @@ Plecs {
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "DefaultSecSize0FirstSecSize192LabelsMeanRMSVisualIdxs88="
+      HeaderState   "{\"DefaultSecSize\":100,\"FirstSecSize\":192,\"Labels\":["
+"\"Min\",\"Max\",\"Mean\",\"RMS\"],\"VisualIdxs\":[5,6,8,9]}"
       PlotPalettes  "AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
       Axes          "2"
@@ -1319,16 +1320,16 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [983, 69; 1920, 1061]
+      Location      [0, 69; 1920, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
-"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAOpAAAAVvw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAA6kAAABEAP///wAAA6kAAANlAAAA"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAeAAAAAWvw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANhAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "{\"DefaultSecSize\":0,\"FirstSecSize\":184,\"Labels\":[],"
-"\"VisualIdxs\":[]}"
+      HeaderState   "{\"DefaultSecSize\":0,\"FirstSecSize\":184,\"Labels\":[\""
+"Min\",\"Max\",\"Mean\",\"RMS\"],\"VisualIdxs\":[5,6,8,9]}"
       PlotPalettes  "AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       Axes          "1"
       TimeRange     "0.0"
@@ -1608,15 +1609,16 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [301, 151; 1688, 917]
+      Location      [0, 69; 1920, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAFYA////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
-"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAVrAAAAePw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAABWsAAABEAP///wAABWsAAAJhAAAA"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAeAAAAAePw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANDAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "DefaultSecSize0FirstSecSize165LabelsMeanRMSVisualIdxs88="
+      HeaderState   "{\"DefaultSecSize\":100,\"FirstSecSize\":68,\"Labels\":["
+"\"Mean\",\"RMS\"],\"VisualIdxs\":[8,9]}"
       PlotPalettes  "AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
       Axes          "2"
@@ -1752,12 +1754,13 @@ Plecs {
       Location      [0, 69; 1920, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
 "G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
-"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAeAAAAAVPw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANnAAAA"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAeAAAAAivw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAAMxAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "DefaultSecSize0FirstSecSize172LabelsMeanRMSVisualIdxs88="
+      HeaderState   "{\"DefaultSecSize\":100,\"FirstSecSize\":172,\"Labels\":["
+"\"Mean\",\"RMS\"],\"VisualIdxs\":[8,9]}"
       PlotPalettes  "AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       Axes          "1"
       TimeRange     "0.0"
@@ -1806,11 +1809,11 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [467, 58; 1826, 1023]
+      Location      [467, 69; 1826, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
-"G0AQQByAGUAYQAAAAAA/////wAAADAA////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
-"///wAAAGIA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABiAP///wAAAAMAAAVPAAAAWvw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAABU8AAABEAP///wAABU8AAANGAAAA"
+"G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAVPAAAAWvw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAABU8AAABEAP///wAABU8AAANhAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
@@ -1945,25 +1948,6 @@ Plecs {
       }
     }
     Component {
-      Type          Capacitor
-      Name          "C3"
-      Show          off
-      Position      [1395, 965]
-      Direction     right
-      Flipped       on
-      LabelPosition north
-      Parameter {
-        Variable      "C"
-        Value         "C1"
-        Show          on
-      }
-      Parameter {
-        Variable      "v_init"
-        Value         "100"
-        Show          off
-      }
-    }
-    Component {
       Type          Scope
       Name          "Scope9"
       Show          on
@@ -1972,16 +1956,16 @@ Plecs {
       Flipped       off
       LabelPosition south
       Frame         [-15, -15; 15, 15]
-      Location      [0, 24; 1920, 1039]
+      Location      [0, 69; 1920, 1061]
       State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
-"G0AQQByAGUAYQAAAAAA/////wAAADAA////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
-"///wAAAGIA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABiAP///wAAAAMAAAeAAAAAYvw"
-"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANwAAAA"
+"G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAeAAAAAWvw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQBAAAAAAAAB4AAAABEAP///wAAB4AAAANhAAAA"
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "{\"DefaultSecSize\":100,\"FirstSecSize\":181,\"Labels\":["
-"\"Max\"],\"VisualIdxs\":[6]}"
+      HeaderState   "{\"DefaultSecSize\":0,\"FirstSecSize\":181,\"Labels\":[\""
+"Max\"],\"VisualIdxs\":[6]}"
       PlotPalettes  "AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       Axes          "1"
       TimeRange     "0"
@@ -4599,6 +4583,346 @@ Plecs {
       Flipped       off
       LabelPosition south
     }
+    Component {
+      Type          Scope
+      Name          "Scope2"
+      Show          on
+      Position      [1360, 635]
+      Direction     up
+      Flipped       off
+      LabelPosition south
+      Frame         [-15, -15; 15, 15]
+      Location      [37, 106; 1389, 792]
+      State         "AAAA/wAAAAD9AAAAAgAAAAEAAAAAAAAAAPwCAAAAA/sAAAAQAFoAbwBvA"
+"G0AQQByAGUAYQAAAAAA/////wAAAC4A////+wAAABQAUwBhAHYAZQBkAFYAaQBlAHcAcwAAAAAA//"
+"///wAAAGAA////+wAAAAwAVAByAGEAYwBlAHMAAAAAAP////8AAABgAP///wAAAAMAAAAAAAAAAPw"
+"BAAAAAfsAAAAUAEQAYQB0AGEAVwBpAGQAZwBlAHQAAAAAAP////8AAABEAP///wAABUgAAAKPAAAA"
+"BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
+"AAAAA=="
+      SavedViews    "AAAAAgAAAAA="
+      HeaderState   "{\"DefaultSecSize\":0,\"FirstSecSize\":68,\"Labels\":[],"
+"\"VisualIdxs\":[]}"
+      PlotPalettes  "AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      Axes          "1"
+      TimeRange     "0.0"
+      ScrollingMode "1"
+      SingleTimeAxis "1"
+      Open          "0"
+      Ts            "-1"
+      SampleLimit   "0"
+      XAxisLabel    "Time / s"
+      ShowLegend    "1"
+      Axis {
+        Name          ""
+        AutoScale     1
+        MinValue      0
+        MaxValue      1
+        Signals       {}
+        SignalTypes   [ ]
+        Untangle      0
+        KeepBaseline  off
+        BaselineValue 0
+      }
+      Fourier {
+        SingleXAxis       on
+        AxisLabel         "Frequency / Hz"
+        Scaling           0
+        PhaseDisplay      0
+        ShowFourierLegend off
+        Axis {
+          Name          ""
+          AutoScale     1
+          MinValue      0
+          MaxValue      1
+          Signals       {}
+          Untangle      0
+          KeepBaseline  off
+          BaselineValue 0
+        }
+      }
+    }
+    Component {
+      Type          Subsystem
+      Name          "Efficiency\nCalculator1"
+      Show          on
+      Position      [1965, 1130]
+      Direction     up
+      Flipped       off
+      LabelPosition south
+      Frame         [-35, -25; 35, 25]
+      SampleTime    "-1"
+      CodeGenDiscretizationMethod "2"
+      CodeGenTarget "Generic"
+      MaskType      "Efficiency Calculator"
+      MaskDisplayLang "2"
+      MaskIconFrame on
+      MaskIconOpaque off
+      MaskIconRotates on
+      Parameter {
+        Variable      "Tavg"
+        Prompt        "Averaging time"
+        Type          FreeText
+        Value         "0.02"
+        Show          off
+        Tunable       off
+        TabName       ""
+      }
+      Terminal {
+        Type          Output
+        Position      [39, 0]
+        Direction     right
+      }
+      Terminal {
+        Type          Input
+        Position      [-35, 15]
+        Direction     left
+      }
+      Terminal {
+        Type          Input
+        Position      [-35, -15]
+        Direction     left
+      }
+      Schematic {
+        Location      [397, 580; 817, 857]
+        ZoomFactor    1
+        SliderPosition [0, 0]
+        ShowBrowser   off
+        BrowserWidth  100
+        Component {
+          Type          SignalMux
+          Name          "Mux3"
+          Show          off
+          Position      [190, 120]
+          Direction     right
+          Flipped       off
+          LabelPosition south
+          Frame         [-2, -10; 7, 10]
+          Parameter {
+            Variable      "Width"
+            Value         "2"
+            Show          off
+          }
+        }
+        Component {
+          Type          Function
+          Name          "1-Psw/Pin"
+          Show          on
+          Position      [305, 120]
+          Direction     right
+          Flipped       off
+          LabelPosition south
+          Frame         [-20, -10; 20, 10]
+          Parameter {
+            Variable      "f(u)"
+            Value         "(1-u[1]/u[2])*100"
+            Show          off
+          }
+        }
+        Component {
+          Type          Saturation
+          Name          "Saturation"
+          Show          on
+          Position      [240, 120]
+          Direction     right
+          Flipped       off
+          LabelPosition south
+          Parameter {
+            Variable      "UpperLimit"
+            Value         "inf"
+            Show          off
+          }
+          Parameter {
+            Variable      "LowerLimit"
+            Value         "1"
+            Show          off
+          }
+        }
+        Component {
+          Type          PeriodicAverage
+          Name          "Periodic \nAverage"
+          Show          on
+          Position      [145, 140]
+          Direction     up
+          Flipped       off
+          LabelPosition south
+          Parameter {
+            Variable      "T_average"
+            Value         "Tavg"
+            Show          off
+          }
+        }
+        Component {
+          Type          Output
+          Name          "efficiency"
+          Show          on
+          Position      [370, 120]
+          Direction     right
+          Flipped       off
+          LabelPosition south
+          Parameter {
+            Variable      "Index"
+            Value         "1"
+            Show          on
+          }
+          Parameter {
+            Variable      "Width"
+            Value         "-1"
+            Show          off
+          }
+        }
+        Component {
+          Type          Input
+          Name          "source power"
+          Show          on
+          Position      [70, 140]
+          Direction     right
+          Flipped       off
+          LabelPosition south
+          Parameter {
+            Variable      "Index"
+            Value         "2"
+            Show          on
+          }
+          Parameter {
+            Variable      "Width"
+            Value         "-1"
+            Show          off
+          }
+        }
+        Component {
+          Type          Input
+          Name          "losses"
+          Show          on
+          Position      [70, 90]
+          Direction     right
+          Flipped       off
+          LabelPosition south
+          Parameter {
+            Variable      "Index"
+            Value         "3"
+            Show          on
+          }
+          Parameter {
+            Variable      "Width"
+            Value         "-1"
+            Show          off
+          }
+        }
+        Connection {
+          Type          Signal
+          SrcComponent  "Mux3"
+          SrcTerminal   1
+          DstComponent  "Saturation"
+          DstTerminal   1
+        }
+        Connection {
+          Type          Signal
+          SrcComponent  "Saturation"
+          SrcTerminal   2
+          DstComponent  "1-Psw/Pin"
+          DstTerminal   1
+        }
+        Connection {
+          Type          Signal
+          SrcComponent  "Periodic \nAverage"
+          SrcTerminal   1
+          Points        [175, 140]
+          DstComponent  "Mux3"
+          DstTerminal   3
+        }
+        Connection {
+          Type          Signal
+          SrcComponent  "1-Psw/Pin"
+          SrcTerminal   2
+          DstComponent  "efficiency"
+          DstTerminal   1
+        }
+        Connection {
+          Type          Signal
+          SrcComponent  "source power"
+          SrcTerminal   1
+          DstComponent  "Periodic \nAverage"
+          DstTerminal   2
+        }
+        Connection {
+          Type          Signal
+          SrcComponent  "losses"
+          SrcTerminal   1
+          Points        [175, 90]
+          DstComponent  "Mux3"
+          DstTerminal   2
+        }
+      }
+    }
+    Component {
+      Type          From
+      Name          "From"
+      Show          off
+      Position      [1735, 1120]
+      Direction     right
+      Flipped       off
+      LabelPosition south
+      Parameter {
+        Variable      "Tag"
+        Value         "Load_V"
+        Show          off
+      }
+      Parameter {
+        Variable      "Visibility"
+        Value         "1"
+        Show          off
+      }
+      Parameter {
+        Variable      "NoMatchingCounterpartAction"
+        Value         "1"
+        Show          off
+      }
+      Parameter {
+        Variable      "CustomMessage"
+        Value         ""
+        Show          off
+        Evaluate      on
+      }
+      Parameter {
+        Variable      "HighlightLevel"
+        Value         "0"
+        Show          off
+      }
+    }
+    Component {
+      Type          PlecsProbe
+      Name          "Source \nPower1"
+      Show          on
+      Position      [1725, 1180]
+      Direction     right
+      Flipped       off
+      LabelPosition south
+      Probe {
+        Component     "V_dc"
+        Path          ""
+        Signals       {"Source power"}
+      }
+    }
+    Component {
+      Type          Display
+      Name          "Efficiency\n(%)1"
+      Show          on
+      Position      [2100, 1130]
+      Direction     up
+      Flipped       off
+      LabelPosition south
+      Frame         [-41, -11; 41, 11]
+      Parameter {
+        Variable      "Notation"
+        Value         "1"
+        Show          off
+      }
+      Parameter {
+        Variable      "Precision"
+        Value         "2"
+        Show          off
+      }
+    }
     Connection {
       Type          Wire
       SrcComponent  "FETD"
@@ -4610,37 +4934,30 @@ Plecs {
         DstTerminal   2
       }
       Branch {
-        DstComponent  "C3"
-        DstTerminal   1
-      }
-    }
-    Connection {
-      Type          Wire
-      SrcComponent  "R1"
-      SrcTerminal   2
-      Points        [1815, 920]
-      Branch {
-        Points        [1815, 965; 1595, 965]
+        Points        [1440, 965]
         Branch {
-          Points        [1440, 965]
+          Points        [1595, 965]
           Branch {
-            DstComponent  "L3"
-            DstTerminal   1
+            Points        [1815, 965; 1815, 920]
+            Branch {
+              DstComponent  "R1"
+              DstTerminal   2
+            }
+            Branch {
+              Points        [1855, 920]
+              DstComponent  "Vm1"
+              DstTerminal   2
+            }
           }
           Branch {
-            DstComponent  "C3"
+            DstComponent  "C8"
             DstTerminal   2
           }
         }
         Branch {
-          DstComponent  "C8"
-          DstTerminal   2
+          DstComponent  "L3"
+          DstTerminal   1
         }
-      }
-      Branch {
-        Points        [1855, 920]
-        DstComponent  "Vm1"
-        DstTerminal   2
       }
     }
     Connection {
@@ -5234,13 +5551,6 @@ Plecs {
       DstTerminal   1
     }
     Connection {
-      Type          Signal
-      SrcComponent  "Vm2"
-      SrcTerminal   3
-      DstComponent  "Goto"
-      DstTerminal   1
-    }
-    Connection {
       Type          HeatPipe
       SrcComponent  "Diode Heat Sink1"
       SrcTerminal   1
@@ -5290,6 +5600,44 @@ Plecs {
       SrcTerminal   1
       Points        [2270, 540; 2270, 520; 2325, 520; 2325, 515]
       DstComponent  "Out3"
+      DstTerminal   1
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Vm2"
+      SrcTerminal   3
+      Points        [1400, 685]
+      Branch {
+        DstComponent  "Goto"
+        DstTerminal   1
+      }
+      Branch {
+        Points        [1320, 685; 1320, 635]
+        DstComponent  "Scope2"
+        DstTerminal   1
+      }
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "From"
+      SrcTerminal   1
+      Points        [1830, 1120; 1830, 1115]
+      DstComponent  "Efficiency\nCalculator1"
+      DstTerminal   3
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Source \nPower1"
+      SrcTerminal   1
+      Points        [1835, 1180; 1835, 1145]
+      DstComponent  "Efficiency\nCalculator1"
+      DstTerminal   2
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Efficiency\nCalculator1"
+      SrcTerminal   1
+      DstComponent  "Efficiency\n(%)1"
       DstTerminal   1
     }
     Annotation {

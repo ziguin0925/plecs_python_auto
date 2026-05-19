@@ -81,14 +81,14 @@ MODEL_PATH = (
     "/home/pcsl/Documents/plecs/sepic/plecs_python_auto/sepic_no_under_cpp.plecs"
 )
 
-opts_lists = cu.generate_combination_ESR(parameter_dict, 12)
+# opts_lists = cu.generate_combination_ESR(parameter_dict, 12)
 
 import existing_remainig as a
 
-# opts_lists = a.not_exist_parameter_opts(parameter_dict)
+opts_lists = a.not_exist_parameter_opts(parameter_dict)
 logger.info(f"[opts_lists = {len(opts_lists)}]")
 logger.info(f"[opts_lists[0] = {len(opts_lists[1])}]")
-
+#
 
 plecs = xml.Server("http://localhost:1080/RPC2").plecs
 

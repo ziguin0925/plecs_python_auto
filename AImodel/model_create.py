@@ -22,25 +22,31 @@ def compile_model(model: Model, optimizer=optimizers.Adam):
     return model
 
 
-def build_original_model_ripple():
-    model_ripple = tf.keras.models.Sequential(
-        [
-            layers.Input(shape=(4,)),
-            layers.Dense(30),  # wx+b
-            layers.BatchNormalization(),  # 정규화
-            layers.LeakyReLU(alpha=0.01),  # Relu, tanh
-            layers.Dense(10),
-            layers.BatchNormalization(),
-            layers.LeakyReLU(alpha=0.01),
-            layers.Dense(2),  #  Iripple, Vripple,
-        ]
-    )
-    return compile_model(model_ripple, optimizers.Adam(1e-3))
+def build_original_model_ripple(input_dim=4, output_dim=1, model_name="original_model"):
+    inputs = Input(shape=(input_dim,))
+
+    x = layers.Dense(20)(inputs)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("sigmoid")(x)
+
+    x = layers.Dense(20)(inputs)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("sigmoid")(x)
+
+    x = layers.Dense(20)(inputs)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("sigmoid")(x)
+
+    outputs = layers.Dense(output_dim)(x)
+
+    model = Model(inputs, outputs, name=model_name)
+
+    return compile_model(model, optimizers.Adam(1e-3))
 
 
 def build_random_forest():
     return RandomForestRegressor(
-        n_estimators=1000,
+        n_estimators=2000,
         max_depth=None,
         min_samples_leaf=2,
         random_state=42,
@@ -48,34 +54,44 @@ def build_random_forest():
     )
 
 
+def residual_block(x, units):
+
+    shortcut = x
+
+    if x.shape[-1] != units:
+        shortcut = layers.Dense(units)(shortcut)
+
+    x = layers.Dense(units)(x)
+    # x = layers.BatchNormalization()(x)
+    x = layers.LeakyReLU(negative_slope=0.01)(x)
+
+    x = layers.Dense(units)(x)
+    # x = layers.BatchNormalization()(x)
+
+    x = layers.Add()([x, shortcut])
+
+    x = layers.LeakyReLU(negative_slope=0.01)(x)
+
+    return x
+
+
 def build_residual(input_dim=4, output_dim=1, model_name="residual_model"):
-    inputs = tf.keras.Input(shape=(input_dim,))
+    inputs = Input(shape=(input_dim,))
 
-    x = layers.Dense(30)(inputs)
-    x = layers.BatchNormalization()(x)
-    x = layers.LeakyReLU(alpha=0.01)(x)
+    x = layers.Dense(256)(inputs)
+    # x = layers.BatchNormalization()(x)
+    x = layers.LeakyReLU(0.01)(x)
 
-    residual = x
+    # 256 -> 128
+    x = residual_block(x, 128)
 
-    x = layers.Dense(30)(x)
-    x = layers.BatchNormalization()(x)
-    x = layers.LeakyReLU(alpha=0.01)(x)
-    x = layers.Dense(30)(x)
-    x = layers.BatchNormalization()(x)
+    # 128 -> 128
+    x = residual_block(x, 128)
 
-    x = layers.Add()([x, residual])
-    x = layers.LeakyReLU(alpha=0.01)(x)
+    # 128 -> 56
+    x = residual_block(x, 64)
 
-    residual = x
-    x = layers.Dense(30)(x)
-    x = layers.BatchNormalization()(x)
-    x = layers.LeakyReLU(alpha=0.01)(x)
-    x = layers.Dense(30)(x)
-    x = layers.BatchNormalization()(x)
-    x = layers.Add()([x, residual])
-    x = layers.LeakyReLU(alpha=0.01)(x)
-
-    outputs = layers.Dense(output_dim)(x)
+    outputs = layers.Dense(output_dim, activation="softplus")(x)
 
     model = Model(inputs, outputs, name=model_name)
     return compile_model(model, optimizers.Adam(1e-3))
@@ -264,8 +280,8 @@ def train_and_evaluate(
 
     early_stop = EarlyStopping(
         monitor="val_loss",  # 검증 성능 기준
-        patience=100,  # 10 epoch 동안 개선 없으면 stop
-        restore_best_weights=True,  # 가장 좋았던 시점으로 되돌림 (중요🔥)
+        patience=50,  # 50 epoch 동안 개선 없으면 stop
+        restore_best_weights=True,  # 가장 좋았던 시점으로 되돌림
     )
 
     reduce_lr = ReduceLROnPlateau(
@@ -275,7 +291,7 @@ def train_and_evaluate(
     checkpoint = ModelCheckpoint(
         f"{model_name}.h5", monitor="val_loss", save_best_only=True
     )
-    # =========================
+
     # callbacks = [early_stop, reduce_lr, checkpoint]
     callbacks = [early_stop, reduce_lr]
 
